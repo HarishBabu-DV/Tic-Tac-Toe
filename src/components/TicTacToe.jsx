@@ -45,9 +45,9 @@ const TicTacToe = () => {
                                     isReady &&(
                                         <span onClick={()=>{
                                             setIsVisible(true)
-                                            isXTurn ? setTimeout(()=>setIsXTurn(false),500) : setIsXTurn(()=>setIsXTurn(true),500)
+                                            isXTurn ? setIsXTurn(false) : setIsXTurn(true)
                                         }}>
-                                            { isVisible && isXTurn ? 'x' : 'o'}
+                                            { isVisible && isXTurn ? 'o' : 'x'}
                                         </span>
                                     
                                     )    
@@ -58,10 +58,11 @@ const TicTacToe = () => {
                                     isReady &&(
                                         <span onClick={()=>{
                                             setIsVisible(true)
-                                            isXTurn ? setTimeout(()=>setIsXTurn(false),500) : setIsXTurn(()=>setIsXTurn(true),500)
-                                        }} className={`${isVisible ?  `inline` :`hidden`}`}>
-                                            {isXTurn ? 'x' : 'o'}
+                                            isXTurn ?setIsXTurn(false) : setIsXTurn(true)
+                                        }}>
+                                            { isVisible && isXTurn ? 'o' : 'x'}
                                         </span>
+                                    
                                     )    
                                 }
                             </td>
@@ -70,10 +71,11 @@ const TicTacToe = () => {
                                     isReady &&(
                                         <span onClick={()=>{
                                             setIsVisible(true)
-                                            isXTurn ? setTimeout(()=>setIsXTurn(false),500) : setIsXTurn(()=>setIsXTurn(true),500)
-                                        }} className={`${isVisible ?  `inline` :`hidden`}`}>
-                                            {isXTurn ? 'x' : 'o'}
+                                            isXTurn ?setIsXTurn(false) : setIsXTurn(true)
+                                        }}>
+                                            { isVisible && isXTurn ? 'o' : 'x'}
                                         </span>
+                                    
                                     )    
                                 }
                             </td>
