@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 
 const TicTacToe = () => {
     const noOfSquares=[1,2,3,4,5,6,7,8,9];
-    // const noOfCols=[...noOfRows];
     const [selectedChoice,setSelectedChoice]=useState('')
     const [isXTurn,setIsXTurn]=useState(false);
     const [isDisabled,setIsDisabled]=useState(false)
     const [isReady,setIsReady]=useState(false)
     const [elements,setElements]=useState(Array(9).fill(null))
+    const [winnerName,setWinnerName]=useState(null)
     const handleOnSubmit=()=>{
         selectedChoice === 'x' ? setIsXTurn(true) : setIsXTurn(false)
         setIsDisabled(true)
@@ -25,7 +25,7 @@ const TicTacToe = () => {
                 ((elements[0] === 'x' && elements[4] === 'x' && elements[8] === 'x'))||
                 ((elements[6] === 'x' && elements[4] === 'x' && elements[2] === 'x'))
             ){
-                console.log('game over.winner is x');
+                setWinnerName('x')
             }
             
         else if( ((elements[0] === 'o' && elements[1] === 'o' && elements[2] === 'o'))||
@@ -36,12 +36,11 @@ const TicTacToe = () => {
         ((elements[2] === 'o' && elements[5] === 'o' && elements[8] === 'o'))||
         ((elements[0] === 'o' && elements[4] === 'o' && elements[8] === 'o'))||
         ((elements[6] === 'o' && elements[4] === 'o' && elements[2] === 'o'))){
-            console.log('game over.winner is o');
-            
+            setWinnerName('o')
         }
         else{
             if(elements.filter(element=>element!==null).length === 9){
-                alert('match draw')
+                setWinnerName('draw')
             } else return
         }
     }
@@ -52,6 +51,16 @@ const TicTacToe = () => {
         setElements(temp)
         setIsXTurn(!isXTurn)
     }
+    const handleReplay=()=>{
+        setIsDisabled(false)
+        setSelectedChoice('')
+        setElements([])
+        setWinnerName(null)
+    }
+
+
+
+
     useEffect(()=>{
         if(elements.length>=3){
             chooseWinner()
@@ -78,43 +87,37 @@ const TicTacToe = () => {
                 </div>
             </div>
         </div>
-        { /* <table  className='mx-auto'>
-            <tbody>
-                {
-                    noOfRows.map((row,index)=>(
-                        <tr key={index}>
-                            {
-                                noOfCols.map((col,index)=>(
-                                    <td className='size-[100px] bg-gray-50 text-center border-2 border-gray-700 text-5xl opacity-0' key={index} onClick={(e)=>{
-                                        isXTurn ? setIsXTurn(false) : setIsXTurn(true)
-                                        e.target.classList.add('opacity-[100%]')
-                                        
-                                    }}>
-                                        { isReady &&  isXTurn ? 'o' : 'x'}
-                                                                                     
-                                    </td>
-                                ))
-                            }
-                            
-                        </tr>
-                    ))
-                }
-            </tbody>
-
-        </table> */}
         
-        <div className='grid grid-cols-3 grid-rows-3 w-[330px] gap-y-3 m-2'>
+        <div className='grid grid-cols-3 grid-rows-3 w-max'>
             {
                 noOfSquares.map((square,index)=>(
-                    <div className='size-[100px] bg-gray-50 border-[2px] border-gray-500 ' onClick={()=>handleOnClick(index)
+                    <div className='relative size-[95px] md:size-[120px] xl:size-[140px] bg-gray-50 border-[2px] border-gray-500 ' onClick={()=>{
+                        if(isReady){
+                            handleOnClick(index)
+                        }
+                        }
                     } key={index}>
-                        <span>
-                        { elements[index] }
-                        </span>
-                        
+                         <div className='absolute w-full h-full left-[47.5px] top-[47.5px] -translate-x-[47.5px] -translate-y-[47.5px] text-[30px] font-bold'>
+                        { 
+                            isReady && 
+                                    elements[index]
+                            
+                        }
+                        </div>
                     </div>
                 ))
             }
+        </div>
+       
+            {
+                winnerName!==null ? winnerName === 'draw' ? (
+                    <h3 className='text-2xl text-yellow-500'>Match draw </h3> 
+                ) :(
+                    <h3 className='text-2xl text-green-500'>Winner is {winnerName}</h3>
+                ) : null
+            }
+        <div>
+            <button className='bg-black text-white px-4 py-1 rounded-[5px] ml-2' onClick={handleReplay}>Replay</button>
         </div>
     </div>
   )
