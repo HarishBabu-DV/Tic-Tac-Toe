@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-
+import appData from '../assets/assets';
 const TicTacToe = () => {
+
+    const { XIcon,OIcon}=appData.icons
     const noOfSquares=[1,2,3,4,5,6,7,8,9];
     const [selectedChoice,setSelectedChoice]=useState('')
     const [isXTurn,setIsXTurn]=useState(false);
@@ -88,14 +90,21 @@ const TicTacToe = () => {
         <div className='grid grid-cols-3 grid-rows-3 w-max'>
             {
                 noOfSquares.map((square,index)=>(
-                    <div className='flex items-center justify-center  size-[95px] md:size-[120px] xl:size-[140px] bg-gray-50 border-[2px] border-gray-500 text-4xl font-bold' onClick={()=>{
+                    <div className='flex items-center justify-center  size-[95px] md:size-[120px] xl:size-[140px] bg-black border-[2px] border-gray-500 text-4xl font-bold' onClick={()=>{
                             if(isReady){
                                 handleOnClick(index)
                             }
                         }} key={index}
                     >
                         { 
-                            isReady && elements[index]
+                            isReady && 
+                            elements[index]==='x' ? (
+                                <div className='x-shape'></div>
+                            ) :(elements[index] === 'o' ? <div className='o-shape'>
+                                    <div className='size-[25px] rounded-full bg-black'>
+
+                                    </div>
+                                </div> :null)
                             
                         }
                       
