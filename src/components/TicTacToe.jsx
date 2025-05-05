@@ -58,9 +58,6 @@ const TicTacToe = () => {
         setWinnerName(null)
     }
 
-
-
-
     useEffect(()=>{
         if(elements.length>=3){
             chooseWinner()
@@ -91,19 +88,17 @@ const TicTacToe = () => {
         <div className='grid grid-cols-3 grid-rows-3 w-max'>
             {
                 noOfSquares.map((square,index)=>(
-                    <div className='relative size-[95px] md:size-[120px] xl:size-[140px] bg-gray-50 border-[2px] border-gray-500 ' onClick={()=>{
-                        if(isReady){
-                            handleOnClick(index)
-                        }
-                        }
-                    } key={index}>
-                         <div className='absolute w-full h-full left-[47.5px] top-[47.5px] -translate-x-[47.5px] -translate-y-[47.5px] text-[30px] font-bold'>
+                    <div className='flex items-center justify-center  size-[95px] md:size-[120px] xl:size-[140px] bg-gray-50 border-[2px] border-gray-500 text-4xl font-bold' onClick={()=>{
+                            if(isReady){
+                                handleOnClick(index)
+                            }
+                        }} key={index}
+                    >
                         { 
-                            isReady && 
-                                    elements[index]
+                            isReady && elements[index]
                             
                         }
-                        </div>
+                      
                     </div>
                 ))
             }
