@@ -16,6 +16,17 @@ html,body{
         background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);
         @apply rounded-full flex items-center justify-center;
     }
+    .xo-container{
+        @apply flex items-center justify-center gap-5 h-1/2;
+       
+    }
+    .welcome-msg-container{
+        &::before{
+            content: '';
+            @apply size-[5px] bg-gray-600 w-[80%];
+        }
+    }
+   
     .play-button{
         background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%);
         @apply px-8 py-2 text-2xl text-white font-semibold rounded-[25px] w-max;
