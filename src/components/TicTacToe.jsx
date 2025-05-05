@@ -7,25 +7,58 @@ const TicTacToe = () => {
     const [isXTurn,setIsXTurn]=useState(false);
     const [isDisabled,setIsDisabled]=useState(false)
     const [isReady,setIsReady]=useState(false)
-    const [elements,setElements]=useState([])
+    const [elements,setElements]=useState(Array(9).fill(null))
     const handleOnSubmit=()=>{
         selectedChoice === 'x' ? setIsXTurn(true) : setIsXTurn(false)
         setIsDisabled(true)
         setIsReady(true)
     }
     const chooseWinner=()=>{
-        // if(elements[0]==elements[1]==elements[2]=='x'){
-
-        // }
+        
+            if(
+                ((elements[0] === 'x' && elements[1] === 'x' && elements[2] === 'x'))||
+                ((elements[3] === 'x' && elements[4] === 'x' && elements[5] === 'x'))||
+                ((elements[6] === 'x' && elements[7] === 'x' && elements[8] === 'x'))||
+                ((elements[0] === 'x' && elements[3] === 'x' && elements[6] === 'x'))||
+                ((elements[1] === 'x' && elements[4] === 'x' && elements[7] === 'x'))||
+                ((elements[2] === 'x' && elements[5] === 'x' && elements[8] === 'x'))||
+                ((elements[0] === 'x' && elements[4] === 'x' && elements[8] === 'x'))||
+                ((elements[6] === 'x' && elements[4] === 'x' && elements[2] === 'x'))
+            ){
+                console.log('game over.winner is x');
+            }
+            
+        else if( ((elements[0] === 'o' && elements[1] === 'o' && elements[2] === 'o'))||
+        ((elements[3] === 'o' && elements[4] === 'o' && elements[5] === 'o'))||
+        ((elements[6] === 'o' && elements[7] === 'o' && elements[8] === 'o'))||
+        ((elements[0] === 'o' && elements[3] === 'o' && elements[6] === 'o'))||
+        ((elements[1] === 'o' && elements[4] === 'o' && elements[7] === 'o'))||
+        ((elements[2] === 'o' && elements[5] === 'o' && elements[8] === 'o'))||
+        ((elements[0] === 'o' && elements[4] === 'o' && elements[8] === 'o'))||
+        ((elements[6] === 'o' && elements[4] === 'o' && elements[2] === 'o'))){
+            console.log('game over.winner is o');
+            
+        }
+        else{
+            if(elements.filter(element=>element!==null).length === 9){
+                alert('match draw')
+            } else return
+        }
     }
     const handleOnClick=(i)=>{
+        if(elements.length === 10) return
         const temp=[...elements]
         temp[i]=isXTurn ? 'x':'o';
         setElements(temp)
         setIsXTurn(!isXTurn)
     }
-    let a=1,b=1,c=1
-    if(a==b==c==1)console.log('equal');
+    useEffect(()=>{
+        if(elements.length>=3){
+            chooseWinner()
+        }
+    },[isXTurn])
+    console.log(elements);
+    
     
     return (
     <div>
