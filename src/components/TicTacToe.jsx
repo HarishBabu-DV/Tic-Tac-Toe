@@ -1,18 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
-import appData from '../assets/assets';
 const TicTacToe = () => {
 
-    const { XIcon,OIcon}=appData.icons
     const noOfSquares=[1,2,3,4,5,6,7,8,9];
     const [selectedChoice,setSelectedChoice]=useState('')
     const [isXTurn,setIsXTurn]=useState(false);
-    const [isDisabled,setIsDisabled]=useState(false)
+    const [isChoiceContainerClosed,setIsChoiceContainerClosed]=useState(false)
     const [isReady,setIsReady]=useState(false)
     const [elements,setElements]=useState(Array(9).fill(null))
     const [winnerName,setWinnerName]=useState(null)
     const handleOnSubmit=()=>{
         selectedChoice === 'x' ? setIsXTurn(true) : setIsXTurn(false)
-        setIsDisabled(true)
+        setIsChoiceContainerClosed(true)
         setIsReady(true)
     }
     const chooseWinner=()=>{
@@ -27,7 +25,8 @@ const TicTacToe = () => {
                 ((elements[0] === 'x' && elements[4] === 'x' && elements[8] === 'x'))||
                 ((elements[6] === 'x' && elements[4] === 'x' && elements[2] === 'x'))
             ){
-                setWinnerName('x')
+                setWinnerName('X')
+                setIsReady(false)
             }
             
         else if( ((elements[0] === 'o' && elements[1] === 'o' && elements[2] === 'o'))||
@@ -38,11 +37,15 @@ const TicTacToe = () => {
         ((elements[2] === 'o' && elements[5] === 'o' && elements[8] === 'o'))||
         ((elements[0] === 'o' && elements[4] === 'o' && elements[8] === 'o'))||
         ((elements[6] === 'o' && elements[4] === 'o' && elements[2] === 'o'))){
-            setWinnerName('o')
+            setWinnerName('O')
+            setIsReady(false)
+
         }
         else{
             if(elements.filter(element=>element!==null).length === 9){
                 setWinnerName('draw')
+                setIsReady(false)
+
             } else return
         }
     }
@@ -67,63 +70,70 @@ const TicTacToe = () => {
     },[isXTurn])
     console.log(elements);
     
+    console.log(isReady);
     
     return (
-    <div>
-        <div className='bg-gray-50 border-[1px] border-gray-700 space-y-2 p-2'>
-            <h2 className='text-2xl font-medium'>Pick your choice</h2>
-            <div >
-                <div className='flex items-center gap-2'>
-                    <input type="radio" name="x_or_o" id="x" value='x' checked={selectedChoice === 'x'} disabled={isDisabled} onChange={e=>setSelectedChoice(e.target.value)}/>
-                    <label htmlFor="x" className='text-xl'>X</label>
+    <section className='relative h-screen black-gradient py-10'>
+        <div className={`choice-container ${isChoiceContainerClosed ? `scale-x-0 scale-y-0 transition-[scale] duration-400`:null}`}>
+            <h2 className='text-2xl font-medium '>Pick your choice</h2>
+            <div className='flex justify-center gap-8'>
+                <div className='choice-symbol-with-radio '>
+                    <label htmlFor="x" className='x-shape size-[100px] lg:size-[150px]' />
+                    <input type="radio" name="x_or_o" id="x" value='x' checked={selectedChoice === 'x'}  onChange={e=>setSelectedChoice(e.target.value)} className='size-[30px] cursor-pointer'/>
+                    
                 </div>
-                <div className='flex items-center gap-2'>
-                    <input  type="radio" name="x_or_o" id="o" value='o' onChange={e=>setSelectedChoice(e.target.value)} checked={selectedChoice==='o'} disabled={isDisabled}/>
-                    <label htmlFor="o" className='text-xl'>O</label>
-                </div>
-                <div>
-                    <button className='bg-black text-white px-4 py-1 rounded-[5px] disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed' disabled={isDisabled} onClick={handleOnSubmit}>Ok</button>
+                <div className='choice-symbol-with-radio '>
+                    <label htmlFor="o" className='o-shape size-[100px] lg:size-[150px]'>
+                        <div className='size-[50px] lg:size-[75px] rounded-full max-md:bg-gray-50 md:bg-[#f9fafbd5] md:backdrop-blur-[5px]' />
+
+                    </label>
+                    <input  type="radio" name="x_or_o" id="o" value='o' onChange={e=>setSelectedChoice(e.target.value)} checked={selectedChoice==='o'}  className='size-[30px] cursor-pointer'/>
                 </div>
             </div>
+            <div>
+                <button className='play-button' onClick={handleOnSubmit}>Continue</button>
+            </div>
         </div>
-        
-        <div className='grid grid-cols-3 grid-rows-3 w-max'>
-            {
-                noOfSquares.map((square,index)=>(
-                    <div className='flex items-center justify-center  size-[95px] md:size-[120px] xl:size-[140px] bg-black border-[2px] border-gray-500 text-4xl font-bold' onClick={()=>{
-                            if(isReady){
-                                handleOnClick(index)
-                            }
-                        }} key={index}
-                    >
-                        { 
-                            isReady && 
-                            elements[index]==='x' ? (
-                                <div className='x-shape'></div>
-                            ) :(elements[index] === 'o' ? <div className='o-shape'>
-                                    <div className='size-[25px] rounded-full bg-black'>
-
-                                    </div>
-                                </div> :null)
+        <div className={`${!isChoiceContainerClosed ? `hidden`:null } h-full flex flex-col items-center justify-center gap-10`}>
+            <div className='grid grid-cols-3 grid-rows-3 w-max '>
+                {
+                    noOfSquares.map((square,index)=>(
+                        <div className='flex items-center justify-center  size-[95px] md:size-[120px] xl:size-[140px] border-[2px] border-gray-500 text-4xl font-bold' onClick={()=>{
+                                if(isReady){
+                                    handleOnClick(index)
+                                }
+                            }} key={index}
+                        >
+                            { 
                             
-                        }
-                      
-                    </div>
-                ))
-            }
+                                elements[index]==='x' ? (
+                                    <div className='x-shape'></div>
+                                ) :(elements[index] === 'o' ? <div className='o-shape'>
+                                        <div className='size-[25px] rounded-full bg-black'>
+
+                                        </div>
+                                    </div> :null)
+                                
+                            }
+                        
+                        </div>
+                    ))
+                }
+            </div>
+        
+                {
+                    winnerName!==null ? winnerName === 'draw' ? (
+                        <h3 className='text-2xl text-yellow-500'>Match draw </h3> 
+                    ) :(
+                        <h3 className='text-2xl font-bold text-green-500'>Winner is {winnerName}</h3>
+                    ) : null
+                }
+            <div>
+                <button className='play-button' onClick={handleReplay}>Replay</button>
+            </div>
         </div>
-       
-            {
-                winnerName!==null ? winnerName === 'draw' ? (
-                    <h3 className='text-2xl text-yellow-500'>Match draw </h3> 
-                ) :(
-                    <h3 className='text-2xl text-green-500'>Winner is {winnerName}</h3>
-                ) : null
-            }
-        <div>
-            <button className='bg-black text-white px-4 py-1 rounded-[5px] ml-2' onClick={handleReplay}>Replay</button>
-        </div>
-    </div>
+
+    </section>
   )
 }
 

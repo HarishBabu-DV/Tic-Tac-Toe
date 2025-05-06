@@ -4,6 +4,7 @@ html,body{
 }
 
 @layer components{
+    /*<------------------- SplashScreen.jsx -------------------> */
     .x-shape,.o-shape{
         content: '';
         @apply size-[65px];
@@ -56,6 +57,16 @@ html,body{
     }
     .play-button{
         background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%);
-        @apply px-8 py-2 text-2xl text-white font-semibold rounded-[25px] w-max lg:text-3xl lg:px-10;
+        @apply px-8 py-2 text-2xl text-white font-semibold rounded-[25px] w-max lg:text-3xl lg:px-10 cursor-pointer;
+    }
+    /*<------------------- TicTacToe.jsx -------------------> */
+    .choice-container{
+        @apply absolute top-0 z-50 w-full max-md:h-full bg-[#f9fafb] flex flex-col items-center justify-evenly md:w-[70%] md:left-[15%] md:right-[15%] md:top-[50px] md:h-[calc(100%-50px)] md:bg-[#f9fafbd5] md:rounded-t-[10px] md:backdrop-blur-[5px];
+    }
+    .choice-symbol-with-radio{
+        @apply flex flex-col items-center gap-10;
+    }
+    .black-gradient{
+        background: linear-gradient(rgba(0,0,0,0.9),rgba(0,0,0,0.9));
     }
 }

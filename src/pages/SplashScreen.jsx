@@ -15,7 +15,7 @@ const SplashScreen = () => {
         <div className='welcome-msg-container '>
           <h1 className='text-center text-2xl font-semibold lg:text-4xl'>Hello &#9995;</h1>
           <h1 className='text-center text-2xl font-semibold lg:text-4xl'>Welcome to Tic Tac Toe </h1>
-            <Link className='play-button'>
+            <Link to={'/game'} className='play-button'>
                 Play
             </Link>
          
