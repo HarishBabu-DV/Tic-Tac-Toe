@@ -60,6 +60,7 @@ const TicTacToe = () => {
         setSelectedChoice('')
         setElements([])
         setWinnerName(null)
+        setIsChoiceContainerClosed(false)
     }
 
     useEffect(()=>{
