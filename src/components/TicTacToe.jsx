@@ -57,7 +57,6 @@ const TicTacToe = () => {
         setIsXTurn(!isXTurn)
     }
     const handleReplay=()=>{
-        setIsDisabled(false)
         setSelectedChoice('')
         setElements([])
         setWinnerName(null)
@@ -128,8 +127,8 @@ const TicTacToe = () => {
                         <h3 className='text-2xl font-bold text-green-500'>Winner is {winnerName}</h3>
                     ) : null
                 }
-            <div>
-                <button className='play-button' onClick={handleReplay}>Replay</button>
+            <div onClick={handleReplay}>
+                <button className='play-button' >Replay</button>
             </div>
         </div>
 
