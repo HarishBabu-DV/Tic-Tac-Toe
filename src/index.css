@@ -18,17 +18,44 @@ html,body{
     }
     .xo-container{
         @apply flex items-center justify-center gap-5 h-1/2;
-       
+        @apply lg:w-1/2 lg:h-full lg:gap-10 ;
     }
     .welcome-msg-container{
-        &::before{
-            content: '';
-            @apply size-[5px] bg-gray-600 w-[80%];
+        @apply h-1/2 flex flex-col gap-8 items-center;
+        @apply lg:h-full lg:w-1/2 lg:justify-center lg:gap-12;
+    }
+
+    @media (max-width:1024px) {
+        .welcome-msg-container{
+            &::before{
+                content: '';
+                @apply h-[5px] bg-gray-600 w-0;
+                animation: expandWidth 1500ms linear forwards;
+            }
         }
     }
-   
+    @media (min-width:1024px) {
+        .welcome-msg-container{
+            position: relative;
+            &::before{
+                content: '';
+                @apply absolute left-0 w-[5px] bg-gray-600 h-0;
+                animation: expandHeight 1500ms linear forwards;
+            }
+        }
+    }
+    @keyframes expandWidth {
+        to{
+            width: 80%;
+        }
+    }
+    @keyframes expandHeight {
+        to{
+            height: 80%;
+        }
+    }
     .play-button{
         background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%);
-        @apply px-8 py-2 text-2xl text-white font-semibold rounded-[25px] w-max;
+        @apply px-8 py-2 text-2xl text-white font-semibold rounded-[25px] w-max lg:text-3xl lg:px-10;
     }
 }
