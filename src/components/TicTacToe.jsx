@@ -76,10 +76,7 @@ const TicTacToe = () => {
             chooseWinner()
         }
     },[isXTurn])
-    console.log(elements);
-    
-    console.log(isReady);
-    console.log(selectedChoice);
+
     
     
     return (
