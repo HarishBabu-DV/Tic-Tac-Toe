@@ -1,17 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react'
+import toast from 'react-hot-toast';
 const TicTacToe = () => {
 
     const noOfSquares=[1,2,3,4,5,6,7,8,9];
-    const [selectedChoice,setSelectedChoice]=useState('')
+    const [selectedChoice,setSelectedChoice]=useState(null)
     const [isXTurn,setIsXTurn]=useState(false);
     const [isChoiceContainerClosed,setIsChoiceContainerClosed]=useState(false)
     const [isReady,setIsReady]=useState(false)
     const [elements,setElements]=useState(Array(9).fill(null))
     const [winnerName,setWinnerName]=useState(null)
     const handleOnSubmit=()=>{
-        selectedChoice === 'x' ? setIsXTurn(true) : setIsXTurn(false)
-        setIsChoiceContainerClosed(true)
-        setIsReady(true)
+        if(selectedChoice === null){
+            toast.error("Select your choice first")
+        } else{
+            selectedChoice === 'x' ? setIsXTurn(true) : setIsXTurn(false)
+            setIsChoiceContainerClosed(true)
+            setIsReady(true)
+        }
     }
     const chooseWinner=()=>{
         
@@ -42,22 +47,25 @@ const TicTacToe = () => {
 
         }
         else{
-            if(elements.filter(element=>element!==null).length === 9){
+            if(elements.filter(element=>element!==null && element!==undefined).length === 9){
                 setWinnerName('draw')
                 setIsReady(false)
-
             } else return
         }
     }
     const handleOnClick=(i)=>{
-        if(elements.length === 10) return
         const temp=[...elements]
-        temp[i]=isXTurn ? 'x':'o';
-        setElements(temp)
-        setIsXTurn(!isXTurn)
+        if((elements.length === 10) || (temp[i]) ) {
+            return
+        }
+        else{
+            temp[i]=isXTurn ? 'x':'o';
+            setElements(temp)
+            setIsXTurn(!isXTurn)
+        }
     }
     const handleReplay=()=>{
-        setSelectedChoice('')
+        setSelectedChoice(null)
         setElements([])
         setWinnerName(null)
         setIsChoiceContainerClosed(false)
@@ -71,6 +79,8 @@ const TicTacToe = () => {
     console.log(elements);
     
     console.log(isReady);
+    console.log(selectedChoice);
+    
     
     return (
     <section className='relative h-screen black-gradient py-10'>
@@ -95,6 +105,7 @@ const TicTacToe = () => {
             </div>
         </div>
         <div className={`${!isChoiceContainerClosed ? `hidden`:null } h-full flex flex-col items-center justify-center gap-10`}>
+            <h3 className={`${isXTurn ? `text-white bg-orange-500`: `text-orange-500 bg-white`} text-2xl px-4 py-1 font-semibold ${winnerName ? `opacity-0`:`opacity-100`} `}>{isXTurn ? 'X' : 'O'} Turn</h3>
             <div className='grid grid-cols-3 grid-rows-3 w-max '>
                 {
                     noOfSquares.map((square,index)=>(

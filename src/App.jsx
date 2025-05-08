@@ -8,6 +8,7 @@ const App = () => {
   return (
     <Routes>
       <Route element={<Layout />} >
+       
         <Route path='/' element={<SplashScreen />}/>
         <Route path='/game' element={<TicTacToe />}/>
       </Route>
