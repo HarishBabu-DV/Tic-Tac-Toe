@@ -1,7 +1,7 @@
 
 # 🕹️ Tic Tac Toe Game - React + Tailwind CSS
 
-A simple yet interactive Tic Tac Toe game built with React and styled using Tailwind CSS. This project helps reinforce core React concepts like state management, conditional rendering, and component design, while also showcasing responsive UI using Tailwind.
+A simple yet interactive Tic Tac Toe game built with React and styled using Tailwind CSS. Implemented using core React concepts like state management, conditional rendering, and component design, while also showcasing responsive UI using Tailwind.
 
 
 ## 🚀Features
